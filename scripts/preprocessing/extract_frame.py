@@ -5,7 +5,7 @@ import ffmpeg
 
 fps = 30
 
-data_root = "data/"
+data_root = "/home/zonepg/datasets/AIC23_Track1_MTMC_Tracking/"
 
 DATA_METADATA = {
     "train": {
@@ -58,11 +58,11 @@ for scene_id in DATA_METADATA["validation"].keys():
     for seq_id in DATA_METADATA["validation"][scene_id].keys():
         val_seq_id.append((scene_id, seq_id))
 
-train_folder_list = [data_root + "train/" + "S{:03d}/".format(sid) for sid in train_seq_id]
-val_folder_list = [data_root + "validation/" + "S{:03d}/".format(sid) for sid in val_seq_id]
+train_folder_list = [data_root + "train/" + "S{:03d}/".format(sid) for _, sid in train_seq_id]
+val_folder_list = [data_root + "validation/" + "S{:03d}/".format(sid) for _, sid in val_seq_id]
 
 for folder_path in train_folder_list + val_folder_list:
-    camera_folder_list = glob.glob(folder_path + '*/')
+    camera_folder_list = sorted(glob.glob(folder_path + '*/'))
     for camera_path in camera_folder_list:
         frame_folder_path = camera_path + 'frame/'
         video_path = camera_path + 'video.mp4'
